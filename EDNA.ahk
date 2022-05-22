@@ -45,7 +45,7 @@ Gui +LastFound +AlwaysOnTop -Caption +ToolWindow  ; +ToolWindow avoids a taskbar
 Gui, Color, %CustomColor%
 Gui, Margin,, -5
 
-Gui, Font, q5 s32, Segoe UI
+Gui, Font, q5 s32, Segoe UI Semibold
 Gui, Add, Text, w200 Center Hidden vRefuel cYellow, FUEL
 
 ; Make all pixels of this color transparent and make the text itself translucent (150):
@@ -55,14 +55,14 @@ Gui, Show, xCenter y0 NoActivate  ; NoActivate avoids deactivating the currently
 ; the taskbar (if visible) will overlap this one, removing the need to deactivate this HUD element manually \o/
 Gui HUDnext:+LastFound +AlwaysOnTop -Caption +ToolWindow  ; +ToolWindow avoids a taskbar button and an alt-tab menu item.
 Gui, HUDnext:Color, %CustomColor%
-Gui, HUDnext:Margin,, -5
+Gui, HUDnext:Margin,, 0
 ; Gui, Font, s32  ; Set a large font size (32-point).
 ; Gui, Add, Text, vMyText cYellow
-Gui, HUDnext:Font, q5 s16, Segoe UI
-Gui, HUDnext:Add, Text, w400 Center vNext cYellow, %nextInRoute%
+Gui, HUDnext:Font, q2 s15, Segoe UI SemiLight
+Gui, HUDnext:Add, Text, w400 Center vNext cEE7700, %nextInRoute%
 
 WinSet, TransColor, %CustomColor%
-Gui, HUDnext:Show, x300 y1050 NoActivate  ; NoActivate avoids deactivating the currently active window.
+Gui, HUDnext:Show, x300 y1045 NoActivate  ; NoActivate avoids deactivating the currently active window.
 
 Return
 
@@ -76,7 +76,8 @@ loadSimpleSystemList(filePath)
         global systemList := {}
         Loop, Read, %filePath%
         {
-            systemList.push(A_LoopReadLine)
+            StringUpper, system, A_LoopReadLine
+            systemList.push(system)
             cnt++
         }
     }
@@ -107,7 +108,9 @@ readEDSMscannerSystemList(filePath := "")
         {
             line := systemsInput.ReadLine()
             endPos := InStr(line, "[") - 2
-            systemList.push(SubStr(line, 1, endPos))
+            system := SubStr(line, 1, endPos)
+            StringUpper, system, system
+            systemList.push(system)
             cnt++
         }
         systemsInput.Close()
