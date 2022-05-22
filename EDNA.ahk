@@ -284,6 +284,7 @@ toggleGalMap()
 F22::
 systemList.push(nextInRoute)
 nextInRoute := systemList.RemoveAt(systemList.MinIndex())
+GuiControl, Text, next, %nextInRoute%
 F21::
 ; plotRoute((Clipboard == "Sol") ? "Colonia" : "Sol")
 plotRoute(nextInRoute)
