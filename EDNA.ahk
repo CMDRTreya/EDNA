@@ -45,33 +45,25 @@ Gui +LastFound +AlwaysOnTop -Caption +ToolWindow  ; +ToolWindow avoids a taskbar
 Gui, Color, %CustomColor%
 Gui, Margin,, -5
 
-; Gui, Font, s32  ; Set a large font size (32-point).
-; Gui, Add, Text, vMyText cYellow
-Gui, Font, q5 s16, Segoe UI
-Gui, Add, Text, w400 Center vNext cYellow, %nextInRoute%
-
 Gui, Font, q5 s32, Segoe UI
 Gui, Add, Text, w200 Center Hidden vRefuel cYellow, FUEL
 
 ; Make all pixels of this color transparent and make the text itself translucent (150):
 WinSet, TransColor, %CustomColor% 150
+Gui, Show, xCenter y0 NoActivate  ; NoActivate avoids deactivating the currently active window.
 
-; SetTimer, HUDwatchdog, 250
-; Return
+; the taskbar (if visible) will overlap this one, removing the need to deactivate this HUD element manually \o/
+Gui HUDnext:+LastFound +AlwaysOnTop -Caption +ToolWindow  ; +ToolWindow avoids a taskbar button and an alt-tab menu item.
+Gui, HUDnext:Color, %CustomColor%
+Gui, HUDnext:Margin,, -5
+; Gui, Font, s32  ; Set a large font size (32-point).
+; Gui, Add, Text, vMyText cYellow
+Gui, HUDnext:Font, q5 s16, Segoe UI
+Gui, HUDnext:Add, Text, w400 Center vNext cYellow, %nextInRoute%
 
-; HUDwatchdog:
-; pid := EliteActive()
-;     MsgBox, %pid%
-; if (EliteActive()) 
-; {
-    Gui, Show, xCenter y0 NoActivate  ; NoActivate avoids deactivating the currently active window.
-;     WinWaitNotActive, "Elite - Dangerous (CLIENT) ahk_class FrontierDevelopmentsAppWinClass ahk_exe EliteDangerous64.exe"
-; }
-; Else
-; {
-;     Gui, Hide
-;     WinWaitActive, "Elite - Dangerous (CLIENT) ahk_class FrontierDevelopmentsAppWinClass ahk_exe EliteDangerous64.exe"
-; }
+WinSet, TransColor, %CustomColor%
+Gui, HUDnext:Show, x300 y1050 NoActivate  ; NoActivate avoids deactivating the currently active window.
+
 Return
 
 F17::ListVars
