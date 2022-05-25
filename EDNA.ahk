@@ -124,14 +124,6 @@ readEDSMscannerSystemList(filePath := "")
     Return cnt
 }
 
-; setWorkingDirToLogFolder()
-; {
-;     ; C:\Users\Maya\Saved Games\Frontier Developments\Elite Dangerous
-;     EnvGet, path, USERPROFILE
-;     path .= "\Saved Games\Frontier Developments\Elite Dangerous\"
-;     SetWorkingDir, %path%
-; }
-
 /*
     EVENTS:
 
@@ -217,7 +209,6 @@ updateCurrentSystemAndNextInRoute()
         ; C:\Users\Maya\Saved Games\Frontier Developments\Elite Dangerous
         EnvGet, logFolderPath, USERPROFILE
         logFolderPath .= "\Saved Games\Frontier Developments\Elite Dangerous\"
-        ; logFileNamePattern := logFolderPath . "Journal." . A_YYYY . "-" . A_MM . "-" . A_DD . "*.log"
         logFileNamePattern := logFolderPath . "Journal.*-*-*.log"
     }
 
