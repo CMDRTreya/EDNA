@@ -4,6 +4,10 @@
 #Persistent
 SetKeyDelay, 50, 150
 
+global currentSystem
+global systemList
+global nextInRoute
+
 ; fn := Func("test")
 ; if fn
 ;     fn.Call()
@@ -73,7 +77,7 @@ loadSimpleSystemList(filePath)
     cnt := 0
     if FileExist(filePath)
     {
-        global systemList := {}
+        systemList := {}
         Loop, Read, %filePath%
         {
             StringUpper, system, A_LoopReadLine
@@ -97,9 +101,11 @@ saveSystemList()
 readEDSMscannerSystemList(filePath := "")
 {
     cnt := 0
-    global systemList := {}
+    systemList := {}
+
     if (filePath == "")
         FileSelectFile, filePath, 3, , Open a EDSM Scanner generated system list, EDSM Scanner (*.txt)
+
     systemsInput := FileOpen(filePath, "r")
     if systemsInput
     {
@@ -203,9 +209,6 @@ updateCurrentSystemAndNextInRoute()
 {
     static logfile
     static elite := "Elite - Dangerous (CLIENT) ahk_class FrontierDevelopmentsAppWinClass ahk_exe EliteDangerous64.exe"
-    global currentSystem
-    global systemList
-    global nextInRoute
     static logFileNamePattern
     static logFolderPath
 
