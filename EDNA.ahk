@@ -1,5 +1,8 @@
 #Requires AutoHotkey v1.1.31.00+
+; needed because VSCode ahk extension messes up the working dir
 #Include, D:\Google Drive\code\Elite\EDstatus\EDstatus.ahk
+#Include, D:\Google Drive\code\Elite\EDNA\SystemCatalog.ahk
+; #Include, SystemCatalog.ahk
 ; #Include, <autoReload>
 #Persistent
 SetKeyDelay, 50, 150
@@ -263,15 +266,6 @@ toggleGalMap()
 {
     Send, {RAlt Down}m{RAlt Up}
 }
-
-distance(x1, y1, z1, x2, y2, z2)
-{
-    Return Sqrt((x1 - x2) ** 2 + (y1 - y2) ** 2 + (z1 - z2) ** 2)
-}
-
-; Space::
-; MsgBox, % systemList[1]
-; return
 
 #If EliteActive()
 
