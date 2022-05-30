@@ -63,7 +63,7 @@ Gui, HUDnext:Margin,, 0
 ; Gui, Font, s32  ; Set a large font size (32-point).
 ; Gui, Add, Text, vMyText cYellow
 Gui, HUDnext:Font, q2 s15, Segoe UI SemiLight
-Gui, HUDnext:Add, Text, w400 Center vNext cEE7700, %nextInRoute%
+Gui, HUDnext:Add, Text, w400 Center vNext cEE7700, % nextInRoute . " | " . systemList.Count()
 
 WinSet, TransColor, %CustomColor%
 Gui, HUDnext:Show, x300 y1045 NoActivate  ; NoActivate avoids deactivating the currently active window.
@@ -242,10 +242,10 @@ updateCurrentSystemAndNextInRoute()
                 currentSystem := SubStr(currentLine, startPos, endPos - startPos)
         }
     }
-    if (currentSystem == nextInRoute)
+    if (currentSystem = nextInRoute)
     {
         nextInRoute := systemList.RemoveAt(systemList.MinIndex())
-        GuiControl, HUDnext:Text, next, %nextInRoute%
+        GuiControl, HUDnext:Text, next, % nextInRoute . " | " . systemList.Count()
     }
     if ((systemList.Count() == 0) && (nextInRoute == ""))
     {
@@ -278,7 +278,7 @@ distance(x1, y1, z1, x2, y2, z2)
 F22::
 systemList.push(nextInRoute)
 nextInRoute := systemList.RemoveAt(systemList.MinIndex())
-GuiControl, HUDnext:Text, next, %nextInRoute%
+GuiControl, HUDnext:Text, next, % nextInRoute . " | " . systemList.Count()
 F21::
 ; plotRoute((Clipboard == "Sol") ? "Colonia" : "Sol")
 plotRoute(nextInRoute)
@@ -298,12 +298,14 @@ plotRoute(destination)
             Sleep, 200
             if (timeWaited++ == 10)
             {
+                ; TODO play some error sound instead
                 MsgBox, Could not open GalMap. Retry plotting after manually entering map (also check assigned shortcut)
                 Return
             }
         }
     }
 
+    ; TODO check if route is already plotted to avoid canceling it when accidentally pressing the hotkey a second time
     Clipboard := destination
 
     ; activate search bar at 1300, 125
