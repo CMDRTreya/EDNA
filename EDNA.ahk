@@ -74,7 +74,7 @@ loadSimpleSystemList(filePath)
         Loop, Read, %filePath%
         {
             StringUpper, system, A_LoopReadLine
-            systemList.push(system)
+            systemList[system] := system
             cnt++
         }
     }
@@ -84,8 +84,8 @@ loadSimpleSystemList(filePath)
 saveSystemList()
 {
     global
-    For k, v in systemList
-        local output .= v . "`n"
+    For sys in systemList
+        local output .= sys . "`n"
     FileDelete, %savedSystemListPath%
     FileAppend, %output%, %savedSystemListPath%
 }
@@ -109,7 +109,7 @@ readEDSMscannerSystemList(filePath := "")
             endPos := InStr(line, "[") - 2
             system := SubStr(line, 1, endPos)
             StringUpper, system, system
-            systemList.push(system)
+            systemList[system] := system
             cnt++
         }
         systemsInput.Close()
