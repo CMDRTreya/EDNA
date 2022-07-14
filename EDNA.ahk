@@ -65,6 +65,20 @@ F21::
 plotRoute(nextInRoute)
 Return
 
+selectNextSystem()
+{
+    For sys in systemList
+    {
+        nextInRoute := sys
+        dist := getSystemDistance(sys, currentSystem)
+        ; TODO determine actual max jump distance of current ship
+        if ((dist > 0) && (dist <= 70))
+        {
+            Break
+        }
+    }
+}
+
 loadSimpleSystemList(filePath)
 {
     cnt := 0
@@ -235,12 +249,18 @@ updateCurrentSystemAndNextInRoute()
                 currentSystem := SubStr(currentLine, startPos, endPos - startPos)
         }
     }
-    if (currentSystem = nextInRoute)
+    if (nextInRoute == "")
     {
-        nextInRoute := systemList.RemoveAt(systemList.MinIndex())
+        selectNextSystem()
         GuiControl, HUDnext:Text, next, % nextInRoute . " | " . systemList.Count()
     }
-    if ((systemList.Count() == 0) && (nextInRoute == ""))
+    if (currentSystem = nextInRoute)
+    {
+        systemList.Remove(currentSystem)
+        selectNextSystem()
+        GuiControl, HUDnext:Text, next, % nextInRoute . " | " . systemList.Count()
+    }
+    if (systemList.Count() == 0)
     {
         MsgBox, Route exhausted, exiting.
         FileDelete, %savedSystemListPath%
