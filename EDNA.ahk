@@ -1,19 +1,15 @@
 #Requires AutoHotkey v1.1.31.00+
-; needed because VSCode ahk extension messes up the working dir
+; TODO replace with a submodule
 #Include, D:\Google Drive\code\Elite\EDstatus\EDstatus.ahk
-#Include, D:\Google Drive\code\Elite\EDNA\SystemCatalog.ahk
+#Include, SystemCatalog.ahk
 #Include, gameFunctions.ahk
-; #Include, <autoReload>
+#Include, <autoReload>
 #Persistent
 SetKeyDelay, 50, 150
 
 global currentSystem
 global systemList
 global nextInRoute
-
-; fn := Func("test")
-; if fn
-;     fn.Call()
 
 savedSystemListPath := A_AppData . "\EDNA"
 if (not FileExist(savedSystemListPath))
@@ -29,23 +25,9 @@ if FileExist(savedSystemListPath)
 Else
     systemCount := readEDSMscannerSystemList()
 
-if (systemCount > 0)
-    nextInRoute := systemList.RemoveAt(systemList.MinIndex())
-
 OnExit("saveSystemList")
 
 SetTimer, updateCurrentSystemAndNextInRoute, 1000
-
-; if FileExist(filePath)
-;     switch source
-;     {
-;         case "EDSM Scanner":
-;             systemCount := readEDSMscannerSystemList(filePath)
-;         case "bar":
-;             MsgBox, "bar"
-;         ; Default:
-;         ;     MsgBox, "default"
-;     }
 
 CustomColor := "EEAA99"  ; Can be any RGB color (it will be made transparent below).
 Gui +LastFound +AlwaysOnTop -Caption +ToolWindow  ; +ToolWindow avoids a taskbar button and an alt-tab menu item.
